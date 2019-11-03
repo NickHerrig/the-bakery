@@ -1,0 +1,4 @@
+---
+
+- name: setup bakery networking
+  include: networking.yml
