@@ -1,0 +1,13 @@
+127.0.0.1 localhost
+::1   localhost ip6-localhost ip6-loopback
+fe00::0   ip6-localnet
+ff00::0   ip6-mcastprefix
+ff02::1   ip6-allnodes
+ff02::2   ip6-allrouters
+
+127.0.1.1 {{ pi_hostname }}
+
+{# Add an entry for each pi in the bakery, using the loop index to map IPs #}
+{% for host in groups['bakery'] %}
+192.168.0.{{ 60 + loop.index }} pi{{ loop.index }} pi{{ loop.index }}.bakery.com
+{% endfor %}
