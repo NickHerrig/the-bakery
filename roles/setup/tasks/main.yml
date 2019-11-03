@@ -2,3 +2,6 @@
 
 - name: setup bakery networking
   include: networking.yml
+
+- name: setup bakery users, groups, and keys
+  include: users_groups_keys.yml

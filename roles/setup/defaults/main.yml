@@ -14,4 +14,3 @@ mac_address_mapping:
 dns_nameservers:
   - "8.8.8.8"
   - "8.8.4.4"
-
