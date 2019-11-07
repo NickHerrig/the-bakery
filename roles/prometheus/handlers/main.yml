@@ -1,0 +1,16 @@
+---
+
+- name: restart prmetheus
+  systemd:
+    daemon_reload: true
+    name: prometheus
+    state: restarted
+  become: true
+  become_user: root
+
+- name: reload prometheus
+  systemd:
+    name: prometheus
+    state: reloaded
+  become: true
+  become_user: root

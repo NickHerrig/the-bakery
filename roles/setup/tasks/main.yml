@@ -5,3 +5,16 @@
 
 - name: setup bakery ansible group, user, and key
   include: ansible_setup.yml 
+
+- name: ensure pip is installed
+  apt:
+    name: python-pip
+    update_cache: true
+  become: true
+  become_user: root
+
+- name: pip install blinkstick
+  pip:
+    name: blinkstick
+  become: true
+  become_user: root

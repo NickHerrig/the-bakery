@@ -1,0 +1,34 @@
+---
+
+- name: create prometheus group
+  group:
+    name: prometheus
+    system: true
+    state: present
+
+- name: create prometheus user
+  user:
+    name: prometheus
+    system: true
+    shell: "/sbin/nologin"
+    group: prometheus
+    createhome: false
+    home: "{{ prometheus_database_dir }}"
+
+- name: create database dir
+  file:
+    path: "{{ prometheus_database_dir }}"
+    state: directory
+    owner: prometheus
+    group: prometheus
+    mode: 0755
+
+# TODO: download binaries
+
+# TODO: copy templates for prometheus config files
+
+# TODO: unzip binaries
+
+# TODO: set up systemd
+
+
