@@ -1,5 +1,7 @@
 # The Bakery
 
+A delicous rack of Pies, mmmmmmm
+
 ## Introduction
 
 The Bakery is a cluster of 4 Raspberry Pi computers originally created for learning:

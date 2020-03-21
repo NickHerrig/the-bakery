@@ -20,6 +20,7 @@
     mode: 0644
   with_items:
     - { template: hosts.j2, dest: /etc/hosts }
+    - { template: hostname.j2, dest: /etc/hostname }
   notify:
     - update hostname
   become: true
