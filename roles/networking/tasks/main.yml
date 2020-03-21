@@ -1,0 +1,7 @@
+---
+
+- name: DEBUG
+  debug:
+    msg: "MAC: {{ item.key }}, hostname: {{ item.value.name }}, IP: {{ item.value.ip }}  "
+  with_dict: "{{ mac_address_mapping }}"
+

@@ -1,0 +1,6 @@
+---
+
+- name: Setup the bakery networking
+  hosts: bakery
+  roles:
+    - networking

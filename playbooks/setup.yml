@@ -1,6 +1,0 @@
----
-
-- name: setup the pi bakery
-  hosts: bakery
-  roles:
-    - setup
