@@ -1,9 +1,7 @@
 ---
-
 mac_address_mapping:
-  "b8:27:eb:69:0d:c3":
-    name: kube1.pidramble.com
-    ip: "10.0.100.61"
-  "b8:27:eb:21:1b:f3":
-    name: kube2.pidramble.com
-    ip: "10.0.100.62"
+  "b8:27:eb:ad:a2:d8":
+    name: keylime.bakery.com
+    ip: "192.168.0.25"
+
+

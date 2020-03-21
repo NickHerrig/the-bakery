@@ -1,0 +1,6 @@
+---
+
+- name: update hostname
+  command: "hostname {{ pi_hostname }}"
+  become: true
+  become_user: root

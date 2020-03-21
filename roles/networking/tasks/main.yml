@@ -1,7 +1,26 @@
 ---
+- name: set current host MAC address
+  set_fact:
+    pi_mac_address: "{{ hostvars[inventory_hostname].ansible_default_ipv4.macaddress }}"
 
-- name: DEBUG
-  debug:
-    msg: "MAC: {{ item.key }}, hostname: {{ item.value.name }}, IP: {{ item.value.ip }}  "
-  with_dict: "{{ mac_address_mapping }}"
+- name: set hostname and ip based on MAC address
+  set_fact:
+    pi_hostname: "{{ mac_address_mapping[pi_mac_address].name }}"
+    pi_ip_address: "{{ mac_address_mapping[pi_mac_address].ip }}"
 
+#- name: DEBUG
+#  debug:
+#    msg: "MAC: {{ item.key }}, hostname: {{ item.value.name }}, IP: {{ item.value.ip }}  "
+#  with_dict: "{{ mac_address_mapping }}"
+
+- name: set networking config files
+  template:
+    src: "templates/{{ item.template }}"
+    dest: "{{ item.dest }}"
+    mode: 0644
+  with_items:
+    - { template: hosts.j2, dest: /etc/hosts }
+  notify:
+    - update hostname
+  become: true
+  become_user: root
