@@ -1,8 +1,11 @@
-# The Bakery 
-a cluster of raspberry pi computers for distributed infrastructure learning.
-original credit to Jeff Geerling @geerlingguy and his [Dramble](https://www.pidramble.com/)
+# The Bakery
 
-## Wired Up 
-![](https://raw.githubusercontent.com/NickHerrig/the-bakery/master/static/thebakery.jpg)
+## Introduction
 
-> mmmmmmmmmm... 
+## Purpose 
+
+## Hardware
+
+## Operating System
+
+## Automation
