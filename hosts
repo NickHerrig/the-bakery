@@ -1,24 +1,5 @@
 [bakery]
-pi1
-pi2
-pi3
-pi4
+192.168.0.25
 
-[nginx]
-pi4
 
-[app]
-pi1
-pi3
 
-[db]
-pi2
-
-[prometheus]
-pi4
-
-[node_exporter:children]
-bakery
-
-[alert_manager]
-pi4
