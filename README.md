@@ -55,9 +55,12 @@ https://www.raspberrypi.org/blog/a-security-update-for-raspbian-pixel/
 TODO: test on third pi server
 
 ### Find pi IP with nmap
+```
+nmap -sP 192.168.0.0/24
+```
+
+### Copy public ssh key to the host .ssh/authorized_keys
+
 ### Add host to ansible hosts
+
 ### run ansible networking.yml
-
-
-
-

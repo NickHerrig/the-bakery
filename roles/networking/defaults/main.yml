@@ -2,10 +2,10 @@
 mac_address_mapping:
   "b8:27:eb:ad:a2:d8":
     name: keylime.bakery.com
-    ip: "192.168.0.25"
+    ip: "192.168.0.50"
   "b8:27:eb:a8:f1:ed":
     name: blueberry.bakery.com
-    ip: "192.168.0.17"
+    ip: "192.168.0.51"
 
 # Nameservers to use in resolv.conf.
 dns_nameservers:
