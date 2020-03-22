@@ -4,4 +4,7 @@ mac_address_mapping:
     name: keylime.bakery.com
     ip: "192.168.0.25"
 
-
+# Nameservers to use in resolv.conf.
+dns_nameservers:
+  - "8.8.8.8"
+  - "8.8.4.4"

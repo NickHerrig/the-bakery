@@ -4,3 +4,10 @@
   command: "hostname {{ pi_hostname }}"
   become: true
   become_user: root
+
+- name: delete dhcp leases
+  file:
+    path: /var/lib/dhcp/dhclient.leases
+    state: absent
+  become: true
+  become_user: root
