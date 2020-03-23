@@ -13,7 +13,9 @@
   become_user: root
 
 - name: reboot server
-  command: "reboot"
+  reboot:
+    msg: Rebooting Host
+    reboot_timeout: 3600
   become: true
   become_user: root
 
