@@ -17,7 +17,7 @@
     - { template: hosts.j2, dest: /etc/hosts }
     - { template: hostname.j2, dest: /etc/hostname }
     - { template: resolv.conf.j2, dest: /etc/resolv.conf }
-    - { template: dhcpcd.conf.j2, dest: /etc/dhcpcd.conf }
+    - { template: 99_config.yaml.j2, dest: /etc/netplan/99_config.yaml }
   notify:
     - update hostname
     - delete dhcp leases
