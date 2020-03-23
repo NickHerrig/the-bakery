@@ -5,7 +5,7 @@ mac_address_mapping:
     ip: "192.168.0.50"
   "b8:27:eb:a8:f1:ed":
     name: blueberry.bakery.com
-    ip: "192.168.0.51"
+    ip: "192.168.0.52"
 
 # Nameservers to use in resolv.conf.
 dns_nameservers:
