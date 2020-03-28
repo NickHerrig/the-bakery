@@ -1,0 +1,19 @@
+---
+
+#TODO: Install system dependencies
+#
+#TODO: create user
+#
+#TODO: create group
+#
+#TODO: create app dir
+#
+#TODO: create log dir?? is this needed for blink stick? maybe not...
+#
+#TODO: Copy python script template
+#
+#TODO: Install virtual env and blink_stick dependenies
+#
+#TODO: Setup blink_stick systemd file
+#
+#TODO: Enable systemd on startup.
