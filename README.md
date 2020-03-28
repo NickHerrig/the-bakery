@@ -43,24 +43,19 @@ That site also has some great info on which version/flavor you should go with.
 ## Initial Setup
 
 ### Select an operating system
-
-Briefly mentioned above, currently i'm using the 32 bit Ubuntu 18.04.4 LTS as my OS.
+As mentioned above, currently i'm using the 32 bit Ubuntu 18.04.4 LTS as my OS.
 
 ### Flash Ubuntu on to your microSD cards
 I use [BelenaEtcher](https://www.balena.io/etcher/), as it's super straight forward and saves me time.
 
-### Enable SSH on microSDs
-not sure if this is needed on ubuntu server, but I'd assume it is..
-https://www.raspberrypi.org/blog/a-security-update-for-raspbian-pixel/
-TODO: test on third pi server
-
 ### Find pi IP with nmap
 ```
 nmap -sP 192.168.0.0/24
+
 ```
+When you plug in your Pi, the DHCP serverer will automatically assign an IP address to the machine.
+It is usually easy to find the pi on your network by simply running the command with the machine off. 
+Then running the command with the machine on, and taking note of the new IP your machine found.
 
 ### Copy public ssh key to the host .ssh/authorized_keys
-
-### Add host to ansible hosts
-
-### run ansible networking.yml
+Once ssh is configured, we will complete the rest of our configuration, deployment, and management via ansible.
