@@ -5,7 +5,7 @@ After=network.target
 [Service]
 User={{ blinkstick_user }}
 WorkingDirectory={{ blinkstick_install_dir }}
-ExecStart={{ blinkstick_install_dir }}/venv/bin/python3 {{ blinkstick_install_dir }}/blinkstick_cpu.py
+ExecStart={{ blinkstick_install_dir }}/venv/bin/python3 {{ blinkstick_install_dir }}/app/blinkstick_cpu.py
 
 [Install]
 WantedBy=multi-user.target

@@ -1,6 +1,7 @@
 ---
 - name: restart blinkstick
   systemd:
+    name: blinkstick
     state: restarted
   become: true
   become_user: root
