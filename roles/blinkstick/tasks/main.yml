@@ -1,0 +1,55 @@
+---
+
+- name: Install system dependencies
+  apt:
+    name:
+      - python3-pip
+      - python3-setuptools
+      - python3-wheel
+      - virtualenv
+    state: latest
+    update_cache: true
+  retries: 3
+  become: true
+  become_user: root
+
+- name: create blinkstick user
+  user:
+    name: "{{ blinkstick_user }}"
+    shell: /bin/bash
+  become: true
+  become_user: root
+
+- name: Create application directories
+  file:
+    path: "{{ blinkstick_install_dir}}/app"
+    state: directory
+    owner: "{{ blinkstick_user }}"
+    group: "{{ blinkstick_user }}"
+    mode: "0700"
+  become: true
+  become_user: root
+
+- name: Copy python applicatiion
+  template:
+    src: blinkstick_on.py.j2
+    dest: "{{ blinkstick_install_dir }}"/app/blinkstick_on.py."
+  notify: run script
+  become: true
+  become_user: root
+
+- name: Install application dependencies
+  pip:
+    name:
+      - blinkstick
+    virtualenv: /app/venv
+    virtualenv_python: python3
+  become: true
+  become_user: "{{ blinkstick_user }}"
+
+
+
+
+#TODO: Setup blink_stick systemd file
+#
+#TODO: Enable systemd on startup.
