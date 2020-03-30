@@ -32,9 +32,8 @@
 
 - name: Copy python applicatiion
   template:
-    src: blinkstick_on.py.j2
-    dest: "{{ blinkstick_install_dir }}"/app/blinkstick_on.py."
-  notify: run script
+    src: blinkstick_cpu.py.j2
+    dest: "{{ blinkstick_install_dir }}/app/blinkstick_cpu.py"
   become: true
   become_user: root
 
@@ -42,14 +41,22 @@
   pip:
     name:
       - blinkstick
-    virtualenv: /app/venv
+    virtualenv: "{{ blinkstick_install_dir }}/venv"
     virtualenv_python: python3
   become: true
-  become_user: "{{ blinkstick_user }}"
+  become_user: root
 
+- name: Setup stystemd
+  template:
+    src: blinkstick.service.j2
+    dest: /etc/systemd/system/blinkstick.service
+  become: true
+  become_user: root
 
-
-
-#TODO: Setup blink_stick systemd file
-#
-#TODO: Enable systemd on startup.
+- name: Enable blinkstick systemd unit at startup
+  systemd:
+    name: blinkstick
+    enabled: true
+    daemon_reload: true
+  become: true
+  become_user: root
