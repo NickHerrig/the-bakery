@@ -1,0 +1,28 @@
+---
+
+- name: create nginx user
+  user:
+    name: "{{ nginx_user }}"
+    shell: /bin/bash
+  become: true
+  become_user: root
+
+- name: Install nginx
+  apt:
+    name:
+      - nginx
+  become: true
+  become_user: root
+
+- name: Setup default nginx config file
+  template:
+    src: nginx.conf.j2
+    dest: "{{ nginx_dir }}/nginx.conf"
+  notify: restart nginx
+  become: true
+  become_user: root
+
+
+#TODO: setup systemd
+
+
