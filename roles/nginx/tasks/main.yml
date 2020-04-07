@@ -1,6 +1,6 @@
 ---
 
-- name: create nginx user
+- name: Create nginx user
   user:
     name: "{{ nginx_user }}"
     shell: /bin/bash
@@ -18,11 +18,22 @@
   template:
     src: nginx.conf.j2
     dest: "{{ nginx_dir }}/nginx.conf"
+  notify: reload nginx
+  become: true
+  become_user: root
+
+- name: Setup nginx systemd file
+  template:
+    src: nginx.service.j2
+    dest: /etc/systemd/system/nginx.service
   notify: restart nginx
   become: true
   become_user: root
 
-
-#TODO: setup systemd
-
-
+- name: Enable nginx unit on startup
+  systemd:
+    name: nginx
+    enabled: true
+    daemon_reload: true
+  become: true
+  become_user: root
