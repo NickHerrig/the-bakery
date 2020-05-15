@@ -1,0 +1,12 @@
+---
+
+- name: check if the node exporter binary is installed.
+  stat:
+    path: "/usr/local/bin/node_exporter"
+  register: node_exporter_is_installed
+
+- name: if installed, register node expoprter version.
+  command: "/usr/local/bin/node_exporter --version"
+  changed_when: false
+  register: node_exporter_version_output
+  when: node_exporter_is_installed.stat.exists
