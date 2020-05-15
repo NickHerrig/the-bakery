@@ -1,0 +1,41 @@
+---
+
+- name: create node exporter group.
+  group:
+    name: node-exporter
+    state: present
+    system: true
+  become: true
+  become_user: root
+
+- name: create node exporter user.
+  user:
+    name: node-exporter
+    group: node-exporter
+    shell: /usr/sbin/nologin
+    state: present
+    system: true
+    create_home: false
+    home: /
+  become: true
+  become_user: root
+
+- name: download and unzip the node exporter binary.
+  unarchive:
+    src: 'https://github.com/prometheus/node_exporter/releases/download/v{{ node_exporter_version }}/node_exporter-{{ node_exporter_version }}.linux-armv6.tar.gz'
+    dest: /tmp
+    remote_src: yes
+  become: true
+  become_user: root
+
+- name: move node exporter binary to /usr/local/bin
+  copy:
+    src: "/tmp/node_exporter-{{ node_exporter_version }}.linux-armv6/node_exporter"
+    dest: /usr/local/bin/node_exporter
+    remote_src: yes
+    mode: 0755
+    owner: root
+    group: root
+  notify: restart node exporter
+  become: true
+  become_user: root

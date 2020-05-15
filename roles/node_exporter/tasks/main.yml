@@ -10,3 +10,8 @@
   changed_when: false
   register: node_exporter_version_output
   when: node_exporter_is_installed.stat.exists
+
+- name: install or upgrade node exporter.
+  import_tasks: install.yml
+  when: (not node_exporter_is_installed.stat.exists) or (node_exporter_version_output.stderr_lines[0].split(" ")[2] != node_exporter_version)
+
