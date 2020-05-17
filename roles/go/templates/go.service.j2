@@ -9,6 +9,9 @@ Type=simple
 User={{ go_app_user }}
 Group={{ go_app_user }}
 ExecStart=/home/{{ go_app_user }}/{{ go_app_name }}
+WorkingDirectory=/home/{{ go_app_user }}
+EnvironmentFile=/home/{{ go_app_user }}/{{ go_app_name}}.env
+NonBlocking=true
 
 [Install]
 WantedBy=multi-user.target

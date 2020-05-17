@@ -14,7 +14,16 @@
   become: true
   become_user: "{{ go_app_user }}"
 
-# Setup systemd enviornment variables
+- name: setup systemd enviornment variables
+  lineinfile:
+    path: /home/{{ go_app_user }}/{{ go_app_name }}.env
+    regexp: "^{{ item.name }}="
+    line: "{{ item.name }}={{ item.value }}"
+    create: true
+  with_items: "{{ go_app_env_vars }}"
+  no_log: true
+  become: true
+  become_user: "{{ go_app_user }}"
 
 - name: copy systemd service file.
   template:
