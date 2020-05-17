@@ -29,8 +29,15 @@
   template:
     src: go.service.j2
     dest: /etc/systemd/system/{{ go_app_name }}.service
+  become: true
+  become_user: root
 
-# Setup systemd socket file
+- name: Setup systemd socket file
+  template:
+    src: go.socket.j2
+    dest: /etc/systemd/system/{{ go_app_name }}.socket
+  become: true
+  become_user: root
 
 - name: allow application user to restart the app via systemctl
   lineinfile:

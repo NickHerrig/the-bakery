@@ -2,6 +2,7 @@
 
 [Unit]
 Description={{ go_app_name }} go application
+Requires={{ go_app_name }}.socket
 After=network-online.target
 
 [Service]
