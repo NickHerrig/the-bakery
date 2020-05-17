@@ -1,0 +1,9 @@
+---
+
+go_app_user: ~
+
+go_app_name: ~
+
+go_ssh_key: ~
+
+go_app_env_vars: []

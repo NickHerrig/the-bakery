@@ -1,0 +1,14 @@
+{{ ansible_managed | comment }}
+
+[Unit]
+Description={{ go_app_name }} go application
+After=network-online.target
+
+[Service]
+Type=simple
+User={{ go_app_user }}
+Group={{ go_app_user }}
+ExecStart=/home/{{ go_app_user }}/{{ go_app_name }}
+
+[Install]
+WantedBy=multi-user.target

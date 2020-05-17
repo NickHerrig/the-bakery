@@ -1,0 +1,41 @@
+---
+
+- name: create go app user.
+  user:
+    name: "{{ go_app_user }}"
+    shell: /bin/bash
+  become: true
+  become_user: root
+
+- name: add github actions ssh key.
+  authorized_key:
+    user: "{{ go_app_user }}"
+    key: "{{ go_ssh_key }}"
+  become: true
+  become_user: "{{ go_app_user }}"
+
+# Setup systemd enviornment variables
+
+- name: copy systemd service file.
+  template:
+    src: go.service.j2
+    dest: /etc/systemd/system/{{ go_app_name }}.service
+
+# Setup systemd socket file
+
+- name: allow application user to restart the app via systemctl
+  lineinfile:
+    path: /etc/sudoers
+    regexp: "^{{ go_app_user }}"
+    line: "{{ go_app_user }} ALL=NOPASSWD: /bin/systemctl restart {{ go_app_name }}"
+    validate: "visudo -cf %s"
+  become: true
+  become_user: root
+
+- name: Enable systemd unit at startup
+  systemd:
+    name: "{{ go_app_name }}"
+    enabled: true
+    daemon_reload: true
+  become: true
+  become_user: root

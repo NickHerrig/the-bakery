@@ -1,0 +1,6 @@
+---
+
+- name: configures the curtaincall application server
+  hosts: curtaincall
+  roles:
+    - go
