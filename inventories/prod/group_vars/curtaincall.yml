@@ -7,7 +7,5 @@ go_ssh_key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCcBaFnCXq1oOkiZh7Ghz9MuT8bmv+k
 go_app_env_vars:
   - name: CC_DB_DSN
     value: prod.db
-  - name: CC_DB_DRIVER
-    value: sqlite3
-  - name: CC_ENV
-    value: PROD
+  - name: CC_PORT
+    value: 8888
