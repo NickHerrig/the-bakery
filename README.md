@@ -35,27 +35,31 @@ Although I'm consistently playing around with different operating systems like:
 - Mint
 - Gentoo
 
-My current favorite is Ubuntu.
-In my humble opinion, I believe it is the most well documented, and easiest to work with OS!
-I downloaded an Ubuntu Server image for the pi the on their [site](https://ubuntu.com/download/raspberry-pi).
-That site also has some great info on which version/flavor you should go with.
+I've decided to utilizing raspberry Pi OS Lite(32-bit) which is a port of the Debian
+distribution with no desktop enviornment.
 
 ## Initial Setup
 
-### Select an operating system
-As mentioned above, currently i'm using the 32 bit Ubuntu 18.04.4 LTS as my OS.
+### Flash OS on microSD cards
+Raspberry Pi provides a solid imaging tool called 
+[Raspberry Pi Imager](https://www.raspberrypi.org/downloads/)
+[Read](https://www.raspberrypi.org/blog/raspberry-pi-imager-imaging-utility/) more about it! 
 
-### Flash Ubuntu on to your microSD cards
-I use [BelenaEtcher](https://www.balena.io/etcher/), as it's super straight forward and saves me time.
+### Enable SSH
+navigate to /Volumes/boot on microSD and `touch ssh`
 
 ### Find pi IP with nmap
 ```
 nmap -sP 192.168.0.0/24
 
 ```
-When you plug in your Pi, the DHCP serverer will automatically assign an IP address to the machine.
-It is usually easy to find the pi on your network by simply running the command with the machine off. 
-Then running the command with the machine on, and taking note of the new IP your machine found.
+
+### Configure a static IP Address
+Edit the raspberry pis dhcpcd.conf file and add line
+```shell
+static ip_address={static-ip}
+```
+example: static ip_address=192.168.0.4/24
 
 ### Copy public ssh key to the host .ssh/authorized_keys
 Once ssh is configured, we will complete the rest of our configuration, deployment, and management via ansible.
