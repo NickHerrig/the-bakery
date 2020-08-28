@@ -46,20 +46,31 @@ Raspberry Pi provides a solid imaging tool called
 [Read](https://www.raspberrypi.org/blog/raspberry-pi-imager-imaging-utility/) more about it! 
 
 ### Enable SSH
-navigate to /Volumes/boot on microSD and `touch ssh`
+Navigate to /Volumes/boot on microSD and `touch ssh`
 
-### Find pi IP with nmap
-```
-nmap -sP 192.168.0.0/24
+### Static IP
 
-```
-
-### Configure a static IP Address
-Edit the raspberry pis dhcpcd.conf file and add line
+- First, find pi ip address of your new pi on your network with nmap
 ```shell
-static ip_address={static-ip}
+nmap -sP 192.168.0.0/24
 ```
-example: static ip_address=192.168.0.4/24
 
-### Copy public ssh key to the host .ssh/authorized_keys
-Once ssh is configured, we will complete the rest of our configuration, deployment, and management via ansible.
+- Edit the raspberry pis /etc/dhcpcd.conf file.
+add the line static ip_address={static-ip}
+
+```txt
+static ip_address=192.168.0.4/24
+```
+
+### Change Default Pass
+
+- **Change default password!!**
+```shell
+sudo passwd pi
+```
+
+### Configure Passwordless SSH
+```shell
+ssh-copy-id pi@{static-ip}
+```
+
