@@ -1,0 +1,26 @@
+---
+
+- name: install ntfs package
+  apt:
+    name: ntfs-3g
+    state: present
+    update_cache: true
+  become: true
+  become_user: root
+
+- name: create data directory
+  file:
+    path: /mnt/data
+    state: directory
+    mode: '0755'
+  become: true
+
+- name: mount external harddrive
+  mount:
+    path: /mnt/data
+    src: UUID=C8DCCBAEDCCB94DA
+    state: mounted
+    fstype: ntfs
+  tags:
+  - molecule-notest
+  become: true
