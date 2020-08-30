@@ -12,3 +12,12 @@
     group: prometheus
     state: present
   become: true
+
+- name: create prometheus data directory
+  file:
+    path: "{{ prometheus_db_dir }}"
+    state: directory
+    owner: prometheus
+    group: prometheus
+    mode: 0755
+  become: true

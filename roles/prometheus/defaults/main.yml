@@ -1,2 +1,2 @@
 ---
-# defaults file for prometheus
+prometheus_db_dir: /mnt/data/prometheus
