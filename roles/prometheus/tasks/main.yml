@@ -1,0 +1,14 @@
+---
+
+- name: create prometheus group
+  group:
+    name: prometheus
+    state: present
+  become: true
+
+- name: create prometheus user
+  user:
+    name: prometheus
+    group: prometheus
+    state: present
+  become: true
