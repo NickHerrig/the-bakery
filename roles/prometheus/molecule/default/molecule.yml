@@ -9,9 +9,12 @@ lint: |
   ansible-lint
   flake8
 platforms:
-  - name: instance
-    image: docker.io/pycontribs/centos:8
-    pre_build_image: true
+  - name: instance-prometheus
+    image: quay.io/paulfantom/molecule-systemd:debian-10
+    docker_host: "${DOCKER_HOST:-unix://var/run/docker.sock}"
+    privileged: true
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
 provisioner:
   name: ansible
 verifier:

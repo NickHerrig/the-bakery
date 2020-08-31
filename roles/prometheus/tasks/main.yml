@@ -22,12 +22,60 @@
     mode: 0755
   become: true
 
+- name: create prometheus configuration directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: root
+    group: prometheus
+    mode: 0770
+  with_items:
+    - "{{ prometheus_config_dir }}"
+
 - name: install and unarchive prometheus
   unarchive:
     src: https://github.com/prometheus/prometheus/releases/download/v{{ prometheus_version }}-rc.0/prometheus-{{ prometheus_version }}-rc.0.linux-armv7.tar.gz
     dest: /tmp
     remote_src: yes
+    owner: prometheus
+    group: prometheus
+    mode: 0755
   retries: 5
+
+- name: copy prometheus and promtool binaries
+  copy:
+    src: "/tmp/prometheus-{{ prometheus_version }}-rc.0.linux-armv7/{{ item }}"
+    dest: "{{ prometheus_install_dir }}/{{ item }}"
+    mode: 0755
+    remote_src: yes
+  with_items:
+    - prometheus
+    - promtool
+  notify:
+    - restart prometheus
+
+- name: copy prometheus console templates
+  copy:
+    src: "/tmp/prometheus-{{ prometheus_version }}-rc.0.linux-armv7/{{ item }}"
+    dest: "{{ prometheus_config_dir }}/{{ item }}/"
+    mode: 0644
+    remote_src: yes
+  with_items:
+    - console_libraries
+    - consoles
+  notify:
+    - restart prometheus
+
+- name: copy prometheus.yml configuration file
+  template:
+    src: prometheus.yml.j2
+    dest: "{{ prometheus_config_dir }}/prometheus.yml"
+    owner: prometheus
+    group: prometheus
+    mode: 0755
+    validate: "{{ prometheus_install_dir }}/promtool check config %s"
+  notify:
+    - reload prometheus
 
 - name: create prometheus systemd service unit
   template:
@@ -37,6 +85,6 @@
     group: prometheus
     mode: 0644
   become: true
-  beomce_user: root
+  become_user: root
   notify:
     - restart prometheus
