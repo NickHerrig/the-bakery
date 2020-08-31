@@ -7,6 +7,11 @@ testinfra_hosts = testinfra.utils.ansible_runner.AnsibleRunner(
     os.environ['MOLECULE_INVENTORY_FILE']).get_hosts('all')
 
 
+def test_user(host):
+    assert host.group("prometheus").exists
+    assert host.user("prometheus").exists
+
+
 @pytest.mark.parametrize("dirs", [
     "/mnt/data/prometheus"
 ])
@@ -16,6 +21,11 @@ def test_dirs(host, dirs):
     assert d.exists
 
 
-def test_user(host):
-    assert host.group("prometheus").exists
-    assert host.user("prometheus").exists
+@pytest.mark.parametrize('svc', [
+  'prometheus'
+])
+def test_svc(host, svc):
+    service = host.service(svc)
+
+    assert service.is_running
+    assert service.is_enabled

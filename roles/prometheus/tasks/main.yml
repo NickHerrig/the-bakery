@@ -88,3 +88,12 @@
   become_user: root
   notify:
     - restart prometheus
+
+- name: ensure prometheus service is started and enabled
+  systemd:
+    daemon_reload: true
+    name: prometheus
+    state: started
+    enabled: true
+  become: true
+  become_user: root
