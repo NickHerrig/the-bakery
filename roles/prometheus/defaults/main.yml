@@ -3,4 +3,4 @@ prometheus_version: 2.21.0
 prometheus_db_dir: /mnt/data/prometheus
 prometheus_config_dir: /etc/prometheus
 prometheus_install_dir: /usr/local/bin
-prometheus_web_listen_address: 'localhost:9090'
+prometheus_web_listen_address: '0.0.0.0:9090'

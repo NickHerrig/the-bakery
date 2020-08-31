@@ -31,6 +31,7 @@
     mode: 0770
   with_items:
     - "{{ prometheus_config_dir }}"
+  become: true
 
 - name: install and unarchive prometheus
   unarchive:
@@ -41,6 +42,7 @@
     group: prometheus
     mode: 0755
   retries: 5
+  become: true
 
 - name: copy prometheus and promtool binaries
   copy:
@@ -53,6 +55,7 @@
     - promtool
   notify:
     - restart prometheus
+  become: true
 
 - name: copy prometheus console templates
   copy:
@@ -65,6 +68,7 @@
     - consoles
   notify:
     - restart prometheus
+  become: true
 
 - name: copy prometheus.yml configuration file
   template:
@@ -76,6 +80,7 @@
     validate: "{{ prometheus_install_dir }}/promtool check config %s"
   notify:
     - reload prometheus
+  become: true
 
 - name: create prometheus systemd service unit
   template:
