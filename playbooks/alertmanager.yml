@@ -1,0 +1,6 @@
+---
+
+- name: installs and configures the prometheus node_exporter
+  hosts: alertmanager
+  roles:
+    - alertmanager
