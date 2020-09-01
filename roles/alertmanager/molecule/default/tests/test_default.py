@@ -8,7 +8,7 @@ testinfra_hosts = testinfra.utils.ansible_runner.AnsibleRunner(
 
 
 def test_user(host):
-    assert host.group("alertmanger").exists
+    assert host.group("alertmanager").exists
     assert host.user("alertmanager").exists
 
 

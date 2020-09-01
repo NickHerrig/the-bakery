@@ -1,2 +1,92 @@
 ---
-# tasks file for alertmanager
+
+- name: create alertmanager group
+  group:
+    name: alertmanager
+    state: present
+  become: true
+
+- name: create alertmanager user
+  user:
+    name: alertmanager
+    group: alertmanager
+    state: present
+  become: true
+
+- name: create alertmanager data directory
+  file:
+    path: "{{ alertmanager_db_dir }}"
+    state: directory
+    owner: alertmanager
+    group: alertmanager
+    mode: 0755
+  become: true
+
+- name: create alertmanager configuration directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: root
+    group: alertmanager
+    mode: 0770
+  with_items:
+    - "{{ alertmanager_config_dir }}"
+  become: true
+
+- name: install and unarchive alertmanager
+  unarchive:
+    src: https://github.com/prometheus/alertmanager/releases/download/v{{ alertmanager_version }}/alertmanager-{{ alertmanager_version }}.linux-armv7.tar.gz
+    dest: /tmp
+    remote_src: yes
+    owner: alertmanager
+    group: alertmanager
+    mode: 0755
+  retries: 5
+  delay: 2
+  become: true
+
+- name: copy alertmanager and amtool binaries
+  copy:
+    src: "/tmp/alertmanager-{{ alertmanager_version }}.linux-armv7/{{ item }}"
+    dest: "{{ alertmanager_install_dir }}/{{ item }}"
+    mode: 0755
+    remote_src: yes
+  with_items:
+    - alertmanager
+    - amtool
+  notify:
+    - restart alertmanager
+  become: true
+
+- name: copy alertmanager.yml config file
+  template:
+    src: alertmanager.yml.j2
+    dest: "{{ alertmanager_config_dir }}/alertmanager.yml"
+    owner: alertmanager
+    group: alertmanager
+    mode: 0755
+  become: true
+  become_user: root
+  notify:
+    - restart alertmanager
+
+- name: create alertmanager systemd service unit
+  template:
+    src: alertmanager.service.j2
+    dest: /etc/systemd/system/alertmanager.service
+    owner: alertmanager
+    group: alertmanager
+    mode: 0644
+  become: true
+  become_user: root
+  notify:
+    - restart alertmanager
+
+- name: ensure alertmanager service is started and enabled
+  systemd:
+    daemon_reload: true
+    name: alertmanager
+    state: started
+    enabled: true
+  become: true
+  become_user: root
