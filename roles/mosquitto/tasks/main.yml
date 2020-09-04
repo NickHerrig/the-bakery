@@ -1,0 +1,29 @@
+---
+- name: install apt_key dependencies
+  apt:
+    name: gpg
+    state: present
+
+- name: Add an apt signing key
+  apt_key:
+    url: http://repo.mosquitto.org/debian/mosquitto-repo.gpg.key
+    state: present
+  become: true
+
+- name: Install mosquitto repository
+  apt_repository:
+    repo: deb http://repo.mosquitto.org/debian/ buster main
+    state: present
+  become: true
+
+- name: install mosquitto
+  apt:
+    name: mosquitto
+    state: present
+
+#TODO: Configure mosquito with config file
+#TODO: Reload mosquito when config changes
+#
+#TODO: Overwrite systemd file? maybe extra security flags?
+#
+#TODO: write handlers..
