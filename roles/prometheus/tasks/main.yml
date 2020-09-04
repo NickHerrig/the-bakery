@@ -57,19 +57,6 @@
     - restart prometheus
   become: true
 
-- name: copy prometheus console templates
-  copy:
-    src: "/tmp/prometheus-{{ prometheus_version }}-rc.0.linux-armv7/{{ item }}"
-    dest: "{{ prometheus_config_dir }}/{{ item }}/"
-    mode: 0644
-    remote_src: yes
-  with_items:
-    - console_libraries
-    - consoles
-  notify:
-    - restart prometheus
-  become: true
-
 - name: copy prometheus.yml configuration file
   template:
     src: prometheus.yml.j2
