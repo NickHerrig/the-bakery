@@ -1,6 +1,0 @@
----
-
-- name: Setup the bakery networking
-  hosts: storage
-  roles:
-    - storage

@@ -1,0 +1,6 @@
+---
+
+- name: Setup the mosquitto mqtt broker
+  hosts: mosquitto
+  roles:
+    - mosquitto

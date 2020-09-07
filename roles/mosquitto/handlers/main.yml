@@ -1,2 +1,14 @@
 ---
-# handlers file for mosquitto
+- name: restart mosquitto
+  become: true
+  systemd:
+    daemon_reload: true
+    name: mosquitto
+    state: restarted
+
+- name: reload mosquitto
+  become: true
+  systemd:
+    name: mosquitto
+    state: reloaded
+

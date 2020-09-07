@@ -1,8 +1,31 @@
 ---
+- name: create mosquitto group
+  group:
+    name: mosquitto
+    state: present
+  become: true
+
+- name: create mosquitto user
+  user:
+    name: mosquitto
+    group: mosquitto
+    state: present
+  become: true
+
+- name: create mosquitto data directory
+  file:
+    path: "{{ mosquitto_data_dir }}"
+    state: directory
+    owner: mosquitto
+    group: mosquitto
+    mode: 0740
+  become: true
+
 - name: install apt_key dependencies
   apt:
     name: gpg
     state: present
+  become: true
 
 - name: Add an apt signing key
   apt_key:
@@ -20,10 +43,30 @@
   apt:
     name: mosquitto
     state: present
+  become: true
 
-#TODO: Configure mosquito with config file
-#TODO: Reload mosquito when config changes
-#
-#TODO: Overwrite systemd file? maybe extra security flags?
-#
-#TODO: write handlers..
+- name: copy local  mosquitto config file
+  template:
+    src: custom.conf.j2
+    dest: /etc/mosquitto/conf.d/custom.conf
+  become: true
+  notify:
+    - reload mosquitto
+
+- name: copy systemd service file.
+  template:
+    src: mosquitto.service.j2
+    dest: /etc/systemd/system/mosquitto.service
+  become: true
+  become_user: root
+  notify:
+    - restart mosquitto
+
+- name: ensure mosquitto service is started and enabled
+  systemd:
+    daemon_reload: true
+    name: mosquitto
+    state: started
+    enabled: true
+  become: true
+  become_user: root

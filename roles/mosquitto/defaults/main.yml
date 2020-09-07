@@ -1,2 +1,3 @@
 ---
-# defaults file for mosquitto
+mosquitto_port: 1883
+mosquitto_data_dir: /mnt/data/mosquitto/
