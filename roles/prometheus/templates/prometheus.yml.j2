@@ -13,11 +13,23 @@ scrape_configs:
     static_configs:
       - targets: ['192.168.0.100:1994']
         labels:
-          environment: 'test'
+          service: 'mqtt'
+          environment: 'bakery'
 
       - targets: ['192.168.0.101:1994']
         labels:
-          environment: 'prod'
+          service: 'dashboard'
+          environment: 'bakery'
+
+      - targets: ['192.168.0.102:1994']
+        labels:
+          service: 'controller'
+          environment: 'bakery'
+
+      - targets: ['192.168.0.103:1994']
+        labels:
+          service: 'orcestrator'
+          environment: 'bakery'
 
       - targets: ['localhost:9090']
         labels:
