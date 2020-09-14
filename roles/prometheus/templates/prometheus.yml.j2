@@ -11,27 +11,23 @@ scrape_configs:
     scrape_interval: 5s
 
     static_configs:
-      - targets: ['192.168.0.100:1994']
+      - targets: ['192.168.0.110:1994']
         labels:
-          service: 'mqtt'
           environment: 'bakery'
 
-      - targets: ['192.168.0.101:1994']
+      - targets: ['192.168.0.111:1994']
         labels:
-          service: 'dashboard'
           environment: 'bakery'
 
-      - targets: ['192.168.0.102:1994']
+      - targets: ['192.168.0.112:1994']
         labels:
-          service: 'controller'
           environment: 'bakery'
 
-      - targets: ['192.168.0.103:1994']
+      - targets: ['192.168.0.113:1994']
         labels:
-          service: 'orcestrator'
           environment: 'bakery'
 
       - targets: ['localhost:9090']
         labels:
           service: 'prometheus'
-          environment: 'prod'
+          environment: 'bakery'
