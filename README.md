@@ -50,17 +50,12 @@ Navigate to /Volumes/boot on microSD and `touch ssh`
 
 ### Static IP
 
-- First, find pi ip address of your new pi on your network with nmap
+- First, find the MAC Addr of your device
 ```shell
-nmap -sP 192.168.0.0/24
+ifconfig -a
 ```
 
-- Edit the raspberry pis /etc/dhcpcd.conf file.
-add the line static ip_address={static-ip}
-
-```txt
-static ip_address=192.168.0.4/24
-```
+from their, configure a device static ip address from your router admin page.
 
 ### Change Default Pass
 
