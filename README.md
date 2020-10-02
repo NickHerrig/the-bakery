@@ -59,13 +59,10 @@ from their, configure a device static ip address from your router admin page.
 
 ### Change Default Pass
 
-- **Change default password!!**
-```shell
-sudo passwd pi
-```
+- **Change default password!!** (Ubuntu happens on login)
 
 ### Configure Passwordless SSH
 ```shell
-ssh-copy-id pi@{static-ip}
+ssh-copy-id ubuntu@{static-ip}
 ```
 
