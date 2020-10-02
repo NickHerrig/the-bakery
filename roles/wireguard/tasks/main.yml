@@ -1,1 +1,7 @@
 ---
+
+- name: Install wireguard
+  apt:
+    name: wireguard
+    state: present
+  become: true
