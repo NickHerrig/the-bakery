@@ -1,0 +1,6 @@
+---
+
+- name: installs and configures ddclient for dynamic dns
+  hosts: ddclient
+  roles:
+    - ddclient
