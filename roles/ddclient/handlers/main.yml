@@ -1,0 +1,7 @@
+---
+- name: restart ddclient
+  become: true
+  systemd:
+    daemon_reload: true
+    name: ddclient
+    state: restarted

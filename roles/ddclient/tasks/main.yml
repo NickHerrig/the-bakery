@@ -1,1 +1,29 @@
 ---
+
+- name: install ddclient
+  apt:
+    name: ddclient
+    state: present
+  become: true
+  become_user: root
+
+- name: copy ddclient.conf
+  template:
+    src: ddclient.conf.j2
+    dest: "/etc/ddclient.conf"
+    owner: root
+    group: root
+    mode: 0600
+  become: true
+  become_user: root
+  notify:
+    - restart ddclient
+
+- name: ensure ddclient service is started and enabled
+  systemd:
+    daemon_reload: true
+    name: ddclient
+    state: started
+    enabled: true
+  become: true
+  become_user: root
