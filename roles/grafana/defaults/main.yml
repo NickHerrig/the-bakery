@@ -1,1 +1,2 @@
 ---
+grafana_data_dir: /mnt/data/grafana

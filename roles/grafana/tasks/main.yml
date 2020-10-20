@@ -1,1 +1,55 @@
 ---
+
+- name: create grafana group
+  group:
+    name: grafana
+    state: present
+  become: true
+
+- name: create grafana user
+  user:
+    name: grafana
+    group: grafana
+    state: present
+  become: true
+
+- name: create grafana data directory
+  file:
+    path: "{{ grafana_data_dir }}"
+    state: directory
+    owner: grafana
+    group: grafana
+    mode: 0740
+  become: true
+
+- name: install role dependencies
+  apt:
+    name:
+      - python-apt
+      - gpg
+      - apt-transport-https
+      - software-properties-common
+    state: present
+  become: true
+
+- name: Add an apt signing key
+  apt_key:
+    url: https://packages.grafana.com/gpg.key
+    state: present
+  become: true
+
+- name: Install grafana repository
+  apt_repository:
+    repo: deb https://packages.grafana.com/oss/deb stable main
+    state: present
+  become: true
+
+- name: install grafana
+  apt:
+    name: grafana
+    state: present
+  become: true
+
+#TODO: Configure grafana
+
+#TODO: Enable systemd service and start
