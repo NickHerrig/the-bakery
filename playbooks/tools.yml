@@ -1,0 +1,6 @@
+---
+
+- name: installs and configures my favorite tools
+  hosts: all
+  roles:
+    - tools
