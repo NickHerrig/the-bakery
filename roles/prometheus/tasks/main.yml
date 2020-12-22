@@ -3,14 +3,20 @@
 - name: create prometheus group
   group:
     name: prometheus
+    system: true
     state: present
+  become_user: root
   become: true
 
 - name: create prometheus user
   user:
     name: prometheus
+    system: true
+    shell: "/usr/sbin/nologin"
     group: prometheus
     state: present
+    createhome: false
+  become_user: root
   become: true
 
 - name: create prometheus data directory
@@ -20,28 +26,38 @@
     owner: prometheus
     group: prometheus
     mode: 0755
+  become_user: root
   become: true
 
 - name: create prometheus configuration directories
   file:
     path: "{{ item }}"
     state: directory
-    owner: root
+    owner: root 
     group: prometheus
     mode: 0770
   with_items:
     - "{{ prometheus_config_dir }}"
+    - "{{ prometheus_config_dir }}/rules"
+  become_user: root
   become: true
 
-- name: install and unarchive prometheus
-  unarchive:
-    src: https://github.com/prometheus/prometheus/releases/download/v{{ prometheus_version }}-rc.0/prometheus-{{ prometheus_version }}-rc.0.linux-armv7.tar.gz
-    dest: /tmp
-    remote_src: yes
-    owner: prometheus
-    group: prometheus
-    mode: 0755
+- name: install prometheus package
+  get_url:
+    url: https://github.com/prometheus/prometheus/releases/download/v{{ prometheus_version }}-rc.0/prometheus-{{ prometheus_version }}-rc.0.linux-armv7.tar.gz
+    dest: "/tmp/prometheus-{{ prometheus_version }}-rc.0.linux-armv7.tar.gz"
   retries: 5
+  delay: 2
+  become_user: root
+  become: true
+
+- name: unarchive prometheus package
+  unarchive:
+    src: "/tmp/prometheus-{{ prometheus_version }}-rc.0.linux-armv7.tar.gz"
+    dest: /tmp
+    creates: "/tmp/prometheus-{{ prometheus_version }}-rc.0.linux-armv7.tar.gz/prometheus"
+    remote_src: true
+  become_user: root
   become: true
 
 - name: copy prometheus and promtool binaries
@@ -49,35 +65,68 @@
     src: "/tmp/prometheus-{{ prometheus_version }}-rc.0.linux-armv7/{{ item }}"
     dest: "{{ prometheus_install_dir }}/{{ item }}"
     mode: 0755
-    remote_src: yes
+    owner: root
+    group: root
+    remote_src: true
   with_items:
     - prometheus
     - promtool
+  become_user: root
+  become: true
   notify:
     - restart prometheus
-  become: true
 
-- name: copy prometheus.yml configuration file
-  template:
-    src: prometheus.yml.j2
-    dest: "{{ prometheus_config_dir }}/prometheus.yml"
-    owner: prometheus
-    group: prometheus
+- name: copy official console templates
+  copy:
+    src: "/tmp/prometheus-{{ prometheus_version }}-rc.0.linux-armv7/{{ item }}/"
+    dest: "{{ prometheus_config_dir }}/{{ item }}/"
     mode: 0755
-    validate: "{{ prometheus_install_dir }}/promtool check config %s"
+    owner: prometheus 
+    group: prometheus 
+    remote_src: true
+  with_items:
+    - console_libraries
+    - consoles
+  become_user: root
+  become: true
+  notify:
+    - restart prometheus
+
+- name: copy alert rules configuration file
+  template:
+    src: "alert.rules.j2"
+    dest: "{{ prometheus_config_dir }}/rules/ansible_managed.rules"
+    owner: root 
+    group: prometheus
+    mode: 0640
+    validate: "{{ prometheus_install_dir }}/promtool check rules %s"
+  become_user: root
+  become: true
   notify:
     - reload prometheus
+
+- name: configure prometheus 
+  template:
+    src: "prometheus.yml.j2"
+    dest: "{{ prometheus_config_dir }}/prometheus.yml"
+    owner: root 
+    group: prometheus
+    mode: 0640
+    validate: "{{ prometheus_install_dir }}/promtool check config %s"
+  become_user: root
   become: true
+  notify:
+    - reload prometheus
 
 - name: create prometheus systemd service unit
   template:
     src: prometheus.service.j2
     dest: /etc/systemd/system/prometheus.service
-    owner: prometheus
-    group: prometheus
+    owner: root
+    group: root
     mode: 0644
-  become: true
   become_user: root
+  become: true
   notify:
     - restart prometheus
 
@@ -87,5 +136,5 @@
     name: prometheus
     state: started
     enabled: true
-  become: true
   become_user: root
+  become: true

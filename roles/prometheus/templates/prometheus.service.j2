@@ -3,6 +3,8 @@
 [Unit]
 Description=Prometheus time series monitoring tool
 After=network-online.target
+Requires=local-fs.target
+After=local-fs.target
 
 [Service]
 Type=simple
@@ -13,9 +15,12 @@ ExecReload=/bin/kill -HUP $MAINPID
 ExecStart={{ prometheus_install_dir }}/prometheus \
   --config.file={{ prometheus_config_dir }}/prometheus.yml \
   --storage.tsdb.path={{ prometheus_db_dir }} \
+  --storage.tsdb.retention.time=7d \
+  --storage.tsdb.retention.size=0 \
+  --web.console.libraries={{ prometheus_config_dir }}/console_libraries \
+  --web.console.templates={{ prometheus_config_dir }}/consoles \
   --web.listen-address={{ prometheus_web_listen_address }} 
 
-ReadWriteDirectories={{ prometheus_db_dir }}
 SyslogIdentifier=prometheus
 Restart=always
 
