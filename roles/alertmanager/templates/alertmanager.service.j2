@@ -5,7 +5,7 @@ After=network-online.target
 
 [Service]
 Type=simple
-PIDFile=/run/alertmanager.pid
+PIDFile=/var/run/alertmanager.pid
 User=alertmanager
 Group=alertmanager
 ExecReload=/bin/kill -HUP $MAINPID

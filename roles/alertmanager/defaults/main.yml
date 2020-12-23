@@ -1,5 +1,5 @@
 ---
-alertmanager_version: 0.20.0
+alertmanager_version: 0.21.0
 alertmanager_db_dir: /mnt/data/alertmanager
 alertmanager_config_dir: /etc/alertmanager
 alertmanager_install_dir: /usr/local/bin

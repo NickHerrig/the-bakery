@@ -4,45 +4,51 @@
   group:
     name: alertmanager
     state: present
+    system: true 
+  become_user: root
   become: true
 
 - name: create alertmanager user
   user:
     name: alertmanager
     group: alertmanager
+    shell: "/usr/sbin/nologin"
+    system: true
+    createhome: false
     state: present
-  become: true
-
-- name: create alertmanager data directory
-  file:
-    path: "{{ alertmanager_db_dir }}"
-    state: directory
-    owner: alertmanager
-    group: alertmanager
-    mode: 0755
+  become_user: root
   become: true
 
 - name: create alertmanager configuration directories
   file:
     path: "{{ item }}"
     state: directory
-    owner: root
+    owner: alertmanager 
     group: alertmanager
-    mode: 0770
+    mode: 0755
   with_items:
     - "{{ alertmanager_config_dir }}"
+    - "{{ alertmanager_db_dir }}"
+  become_user: root
+  become: true
+
+- name: install alertmanager package
+  get_url:
+    url: "https://github.com/prometheus/alertmanager/releases/download/v{{ alertmanager_version }}/alertmanager-{{ alertmanager_version }}.linux-armv7.tar.gz"
+    dest: "/tmp/alertmanager-{{ alertmanager_version }}.linux-armv7.tar.gz"
+  retries: 5
+  delay: 2
+  become_user: root
   become: true
 
 - name: install and unarchive alertmanager
   unarchive:
-    src: https://github.com/prometheus/alertmanager/releases/download/v{{ alertmanager_version }}/alertmanager-{{ alertmanager_version }}.linux-armv7.tar.gz
-    dest: /tmp
-    remote_src: yes
-    owner: alertmanager
-    group: alertmanager
+    src: "/tmp/alertmanager-{{ alertmanager_version }}.linux-armv7.tar.gz"
+    dest: "/tmp"
     mode: 0755
-  retries: 5
-  delay: 2
+    remote_src: yes
+    creates: "tmp/alertmanager-{{ alertmanager_version }}.linux-armv7/alertmanager"
+  become_user: root
   become: true
 
 - name: copy alertmanager and amtool binaries
@@ -54,9 +60,10 @@
   with_items:
     - alertmanager
     - amtool
+  become_user: root
+  become: true
   notify:
     - restart alertmanager
-  become: true
 
 - name: copy alertmanager.yml config file
   template:
@@ -64,9 +71,9 @@
     dest: "{{ alertmanager_config_dir }}/alertmanager.yml"
     owner: alertmanager
     group: alertmanager
-    mode: 0755
-  become: true
+    mode: 0644
   become_user: root
+  become: true
   notify:
     - restart alertmanager
 
@@ -74,11 +81,11 @@
   template:
     src: alertmanager.service.j2
     dest: /etc/systemd/system/alertmanager.service
-    owner: alertmanager
-    group: alertmanager
+    owner: root
+    group: root 
     mode: 0644
-  become: true
   become_user: root
+  become: true
   notify:
     - restart alertmanager
 
@@ -88,5 +95,5 @@
     name: alertmanager
     state: started
     enabled: true
-  become: true
   become_user: root
+  become: true
