@@ -1,14 +1,13 @@
 {{ ansible_managed | comment }}
 
 groups:
-- name: bakery alerting rules
+- name: alerting rules
   rules:
-  - alert: RaspberryPiDown
-    expr: "up{job='node'} == 0"
+  - alert: InstanceDown 
+    expr: "up == 0"
     for: 5m
     labels:
       severity: critical
-      type: node_exporter
     annotations:
-      summary: "{% raw %}Raspberry Pi Down!{% endraw %}"
-      description: "{% raw %}Could not reach node exporter for 5 min on instance {{ $labels.instance }}.{% endraw %}"
+      summary: "{% raw %}Server is down!{% endraw %}"
+      description: "{% raw %}Could not reach instance for 5 min on instance {{ $labels.instance }}.{% endraw %}"

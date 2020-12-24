@@ -1,7 +1,6 @@
 ---
 
-- name: installs and configures the prometheus node_exporter
+- name: installs and configures a prometheus server 
   hosts: prometheus
   roles:
-    - storage
     - prometheus

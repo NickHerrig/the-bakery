@@ -1,5 +1,6 @@
 ---
 prometheus_version: 2.23.0
+prometheus_arch: linux-armv7
 prometheus_db_dir: /mnt/data/prometheus
 prometheus_config_dir: /etc/prometheus
 prometheus_install_dir: /usr/local/bin
