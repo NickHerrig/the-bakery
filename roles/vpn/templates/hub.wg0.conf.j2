@@ -1,0 +1,30 @@
+{{ ansible_managed | comment }}
+
+##############################################
+# Relay Server Interface
+##############################################
+[Interface]
+Address = {{ vpn_server_private_ip }}/24
+ListenPort = {{ vpn_server_port }} 
+PrivateKey = {{ vpn_server_private_key }} 
+DNS = 1.1.1.1, 8.8.8.8
+
+##############################################
+# Laptop Peers 
+##############################################
+{% for device in vpn_devices %}
+[Peer]
+# Device Information - {{ device.info }}
+PublicKey = {{ device.public_key }} 
+AllowedIPs = {{ device.ip_address }} 
+{% endfor %}
+
+##############################################
+# NAT Server Peers
+##############################################
+#TODO!!
+#[Peer]
+# Name = NAT NAME/Description
+# Endpoint = home-server.example-vpn.dev:51820
+# PublicKey = 8bSk5fATxg9qdxbK20iTGdrQ7SWvxIBhxdMo+W54pEg=
+# AllowedIPs = 10.0.44.3/32

@@ -1,0 +1,13 @@
+{{ ansible_managed | comment }}
+
+[Interface]
+# Device Information - {{ item.info }}
+Address = {{ item.ip_address }}
+PrivateKey = #Copy Private Key Here!
+DNS = 1.1.1.1, 8.8.8.8
+
+[Peer]
+Endpoint = {{ vpn_server_public_ip }}:{{ vpn_server_port }}
+PublicKey = {{ vpn_server_public_key }}
+AllowedIPs = {{ vpn_server_private_ip }}/24
+PersistentKeepalive = 25

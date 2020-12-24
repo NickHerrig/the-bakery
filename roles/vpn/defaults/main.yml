@@ -1,0 +1,17 @@
+---
+# Sensible Defaults for vpn server
+vpn_server_private_ip: 10.0.44.1
+vpn_server_port: 51910
+
+
+# These variables are meant to be overwritten in group_vars
+
+# Public IP address of vpn relay server
+vpn_server_public_ip: ~
+
+# a list of devices for vpn access 
+vpn_devices: []
+#vpn_devices:
+#  - info: "nicks-laptop"
+#    ip_address: 10.0.44.2/32
+#    public_key: foobarbazzzz=

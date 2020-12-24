@@ -1,0 +1,70 @@
+---
+- name: Install system dependencies
+  apt:
+    name: openresolv
+    state: present
+    update_cache: true
+  become: true
+
+- name: Install wireguard
+  apt:
+    name: wireguard
+    state: present
+    update_cache: true
+  become: true
+
+- name: Generate and register a wireguard private key
+  shell: 'wg genkey'
+  register: private_key
+
+- name: Set the server private key fact
+  set_fact:
+    vpn_server_private_key: "{{ private_key.stdout }}"
+
+- name: Generate/register a wireguard public key from private key
+  shell: 'wg pubkey'
+  args:
+    stdin: "{{ vpn_server_private_key }}"
+  register: public_key
+
+- name: Set the server public key fact
+  set_fact:
+    vpn_server_public_key: "{{ public_key.stdout }}"
+
+- name: copy vpn server configuration file
+  template:
+    src: hub.wg0.conf.j2
+    dest: "/etc/wireguard/wg0.conf"
+    owner: root
+    group: root
+    mode: 0600
+  become_user: root
+  become: true
+  notify:
+    - restart wireguard 
+
+- name: enable IPv4 traffic forwarding
+  sysctl:
+    name: net.ipv4.ip_forward
+    value: "1"
+    sysctl_set: true
+    state: present
+    reload: yes
+  become_user: root
+  become: true
+
+- name: start wireguard
+  systemd:
+    name: wg-quick@wg0
+    state: started
+    daemon_reload: true
+    enabled: true
+  become_user: root
+  become: true
+
+- name: create device.wg0.conf files for devices on network
+  delegate_to: localhost
+  template:
+    src: device.wg0.conf.j2
+    dest: "~/{{ item.info }}.wg0.conf"
+  with_items: "{{ vpn_devices }}"

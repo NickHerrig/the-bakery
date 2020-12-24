@@ -1,6 +1,0 @@
----
-
-- name: Install and configure the wireguard VPN
-  hosts: wireguard
-  roles:
-    - wireguard
