@@ -1,0 +1,4 @@
+---
+prometheus_version: 2.23.0
+prometheus_arch: linux-amd64
+prometheus_web_listen_address: '10.0.44.1:9090'
