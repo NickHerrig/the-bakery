@@ -1,0 +1,4 @@
+---
+alertmanager_version: 0.21.0
+alertmanager_arch: linux-amd64
+alertmanager_web_listen_address: '10.0.44.1:9093'

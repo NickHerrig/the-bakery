@@ -3,8 +3,8 @@
 - name: create alertmanager group
   group:
     name: alertmanager
-    state: present
     system: true 
+    state: present
   become_user: root
   become: true
 
@@ -34,28 +34,29 @@
 
 - name: install alertmanager package
   get_url:
-    url: "https://github.com/prometheus/alertmanager/releases/download/v{{ alertmanager_version }}/alertmanager-{{ alertmanager_version }}.linux-armv7.tar.gz"
-    dest: "/tmp/alertmanager-{{ alertmanager_version }}.linux-armv7.tar.gz"
+    url: "{{ alertmanager_download_url }}/v{{ alertmanager_version }}/alertmanager-{{ alertmanager_version }}.{{ alertmanager_arch }}.tar.gz"
+    dest: "/tmp/alertmanager-{{ alertmanager_version }}.{{ alertmanager_arch }}.tar.gz"
   retries: 5
   delay: 2
   become_user: root
   become: true
 
-- name: install and unarchive alertmanager
+- name: unarchive alertmanager package
   unarchive:
-    src: "/tmp/alertmanager-{{ alertmanager_version }}.linux-armv7.tar.gz"
+    src: "/tmp/alertmanager-{{ alertmanager_version }}.{{ alertmanager_arch }}.tar.gz"
     dest: "/tmp"
-    mode: 0755
     remote_src: yes
-    creates: "tmp/alertmanager-{{ alertmanager_version }}.linux-armv7/alertmanager"
+    creates: "tmp/alertmanager-{{ alertmanager_version }}.{{ alertmanager_arch }}/alertmanager"
   become_user: root
   become: true
 
 - name: copy alertmanager and amtool binaries
   copy:
-    src: "/tmp/alertmanager-{{ alertmanager_version }}.linux-armv7/{{ item }}"
+    src: "/tmp/alertmanager-{{ alertmanager_version }}.{{ alertmanager_arch }}/{{ item }}"
     dest: "{{ alertmanager_install_dir }}/{{ item }}"
     mode: 0755
+    owner: root
+    group: root
     remote_src: yes
   with_items:
     - alertmanager
@@ -69,9 +70,9 @@
   template:
     src: alertmanager.yml.j2
     dest: "{{ alertmanager_config_dir }}/alertmanager.yml"
-    owner: alertmanager
+    owner: root 
     group: alertmanager
-    mode: 0644
+    mode: 0640
   become_user: root
   become: true
   notify:

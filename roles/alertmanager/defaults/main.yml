@@ -1,5 +1,9 @@
 ---
+alertmanager_download_url: https://github.com/prometheus/alertmanager/releases/download
 alertmanager_version: 0.21.0
+alertmanager_arch: linux-amrv7 
+
+
 alertmanager_db_dir: /mnt/data/alertmanager
 alertmanager_config_dir: /etc/alertmanager
 alertmanager_install_dir: /usr/local/bin
