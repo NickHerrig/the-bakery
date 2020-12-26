@@ -1,5 +1,5 @@
 ---
-vpn_server_public_ip: 167.172.131.158
+vpn_server_public_ip: 67.205.157.155
 
 vpn_devices:
   - info: "nick-laptop"

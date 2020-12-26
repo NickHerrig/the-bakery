@@ -44,7 +44,7 @@
 
 - name: install prometheus package
   get_url:
-    url: "https://github.com/prometheus/prometheus/releases/download/v{{ prometheus_version }}/prometheus-{{ prometheus_version }}.{{ prometheus_arch}}.tar.gz"
+    url: "{{ prometheus_download_url }}/v{{ prometheus_version }}/prometheus-{{ prometheus_version }}.{{ prometheus_arch}}.tar.gz"
     dest: "/tmp/prometheus-{{ prometheus_version }}.{{ prometheus_arch }}.tar.gz"
   retries: 5
   delay: 2
