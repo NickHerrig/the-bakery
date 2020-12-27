@@ -1,0 +1,15 @@
+---
+vpn_server_public_ip: 161.35.104.139
+
+vpn_devices:
+  - info: "nick-laptop"
+    ip_address: 10.0.44.3/32
+    public_key: yThJlcgob2PYowTge3ZpKeTF14b64eW18riRMbjJBRc=
+
+prometheus_version: 2.23.0
+prometheus_arch: linux-amd64
+prometheus_web_listen_address: '10.0.44.1:9090'
+
+alertmanager_version: 0.21.0
+alertmanager_arch: linux-amd64
+alertmanager_web_listen_address: '10.0.44.1:9093'

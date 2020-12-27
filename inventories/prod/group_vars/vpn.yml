@@ -1,7 +1,0 @@
----
-vpn_server_public_ip: 67.205.157.155
-
-vpn_devices:
-  - info: "nick-laptop"
-    ip_address: 10.0.44.3/32
-    public_key: yThJlcgob2PYowTge3ZpKeTF14b64eW18riRMbjJBRc=
