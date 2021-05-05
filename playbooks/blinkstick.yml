@@ -1,6 +1,0 @@
----
-
-- name: Setup the bakery blink_stick leds
-  hosts: bakery
-  roles:
-    - blinkstick

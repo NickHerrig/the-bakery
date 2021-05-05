@@ -1,0 +1,11 @@
+nebula:
+  hosts:
+    150.136.6.63:
+      nebula_is_lighthouse: true
+      nebula_hostname: lighthouse
+      nebula_ip: 10.100.14.1
+      nebula_groups: "lightouse,vm"
+    150.136.53.59:
+      nebula_hostname: webserver 
+      nebula_ip: 10.100.14.2
+      nebula_groups: "webserver,vm"

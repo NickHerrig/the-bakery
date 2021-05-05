@@ -1,9 +1,0 @@
----
-
-- name: installs and configures a prometeus server, and alertmanager
-  hosts: monitoring
-  roles:
-    - vpn 
-    - prometheus
-    - alertmanager
-

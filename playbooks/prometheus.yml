@@ -1,6 +1,0 @@
----
-
-- name: installs and configures a prometheus server 
-  hosts: prometheus
-  roles:
-    - prometheus
