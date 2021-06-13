@@ -1,0 +1,13 @@
+---
+- name: limit ssh connections with ufw
+  community.general.ufw:
+    name: OpenSSH 
+    rule: limit
+  become: true
+  become_user: root
+
+- name: enable ufw and deny everything 
+  community.general.ufw:
+    state: enabled
+  become: true
+  become_user: root

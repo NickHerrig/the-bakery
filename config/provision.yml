@@ -1,0 +1,6 @@
+---
+
+- name: provision and configure bare hosts
+  hosts: all
+  roles:
+    - ubuntu

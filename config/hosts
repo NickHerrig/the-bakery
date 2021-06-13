@@ -1,0 +1,40 @@
+all:
+  hosts:
+    lighthouse.nebula.nickherrig.com:
+      ansible_host: 143.244.150.153 
+      ansible_user: root
+    appserver1.nebula.nickherrig.com:
+      ansible_host: 192.168.0.110
+    appserver2.nebula.nickherrig.com:
+      ansible_host: 192.168.0.111
+    appserver3.nebula.nickherrig.com:
+      ansible_host: 192.168.0.112
+
+  children:
+    nebula:
+      hosts:
+        lighthouse.nebula.nickherrig.com:
+          nebula_is_lighthouse: true
+          nebula_hostname: lighthouse
+          nebula_ip: 10.100.14.1
+          nebula_groups: "lightouse,vm"
+          nebula_outbound_firewall_rules: |
+            - port: any
+              proto: any
+              host: any
+          nebula_inbound_firewall_rules: |
+            - port: any
+              proto: any 
+              host: any
+        appserver1.nebula.nickherrig.com:
+          nebula_hostname: webserver 
+          nebula_ip: 10.100.14.2
+          nebula_groups: "webserver,vm"
+          nebula_outbound_firewall_rules: |
+            - port: any
+              proto: any
+              host: any
+          nebula_inbound_firewall_rules: |
+            - port: any
+              proto: any 
+              host: any
