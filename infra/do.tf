@@ -9,7 +9,7 @@ resource "digitalocean_droplet" "nebula-lighthouse" {
   region     = "nyc1"
   size       = "s-1vcpu-1gb"
   monitoring = "true"
-  ssh_keys   = [
+  ssh_keys = [
     digitalocean_ssh_key.nick.fingerprint,
-    ]
+  ]
 }
