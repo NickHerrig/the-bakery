@@ -19,5 +19,5 @@ provider "digitalocean" {
 provider "oci" {
   region              = "us-ashburn-1"
   auth                = "SecurityToken"
-  config_file_profile = "DEFAULT"
+  config_file_profile = "homelab"
 }
