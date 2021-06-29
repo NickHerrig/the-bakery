@@ -3,30 +3,16 @@ nebula_ca_name: "nebula.nickherrig.com"
 nebula_ca_dir: "~/Desktop/nebula/certs"
 nebula_device_config_dir: "~/Desktop/nebula/configs"
 
-nebula_lighthouse_public_ip: 150.136.6.63
+nebula_lighthouse_public_ip: 198.199.74.233
 nebula_lighthouse_private_ip: 10.100.14.1
 nebula_dns: true
 
 nebula_client_devices:
   - nebula_hostname: "laptop"
-    nebula_ip: 10.100.14.20
+    nebula_ip: 10.100.14.100
     nebula_groups: "laptop,admin,ssh"
     nebula_outbound_firewall_rules: |
       - port: any
         proto: any
         host: any
-    nebula_inbound_firewall_rules: |
-      - port: any
-        proto: icmp
-        host: any
-  - nebula_hostname: "phone"
-    nebula_ip: 10.100.14.21
-    nebula_groups: "phone,admin,ssh"
-    nebula_outbound_firewall_rules: |
-      - port: any
-        proto: any
-        host: any
-    nebula_inbound_firewall_rules: |
-      - port: any
-        proto: icmp
-        host: any
+    nebula_inbound_firewall_rules: ''

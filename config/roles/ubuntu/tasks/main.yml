@@ -1,4 +1,50 @@
 ---
+- name: set timezone to central timezone
+  community.general.timezone:
+    hwclock: local
+    name: Etc/UTC
+  become: true
+  become_user: root
+  notify: restart crond
+
+- name: install common packages 
+  apt:
+    name:
+      - vim
+      - sl
+      - net-tools
+      - sqlite3
+      - python3
+      - python3-pip
+      - python3-venv
+      - ufw
+      - htop
+      - tree
+      - unattended-upgrades
+    update_cache: yes
+  become: true
+  become_user: root
+
+- name: Seucre ssh (pubkey, nopwd, noempty)
+  lineinfile:
+    path: "/etc/ssh/sshd_config"
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+  with_items:
+    - regexp: "^#?UsePAM"
+      line: "UsePAM yes"
+    - regexp: "^#?PermitEmptyPasswords"
+      line: "PermitEmptyPasswords no"
+    - regexp: "^#?PubkeyAuthentication"
+      line: "PubkeyAuthentication yes"
+    - regexp: "^#?PasswordAuthentication"
+      line: "PasswordAuthentication no"
+    - regexp: "^#?ChallengeResponseAuthentication"
+      line: "ChallengeResponseAuthentication no"
+  become: true
+  become_user: root
+  notify: restart sshd 
+
 - name: limit ssh connections with ufw
   community.general.ufw:
     name: OpenSSH 
@@ -11,3 +57,41 @@
     state: enabled
   become: true
   become_user: root
+
+- name: limit journald logs size 
+  lineinfile:
+    path: "/etc/systemd/journald.conf"
+    regexp: "^#?SystemMaxUse="
+    line: "SystemMaxUse=200M"
+  become: true
+  become_user: root
+  notify: restart systemd-journald
+
+# TODO: Enable Unattended Upgrades.
+# /etc/apt/apt.conf.d/20auto-upgrades
+# /etc/apt/apt.conf.d/50unattended-upgrades
+#    regexp: "{{ item.regexp }}"
+#    line: "{{ item.line }}"
+#  with_items:
+#    - regexp: "^#?UsePAM"
+
+- name: configure unattended upgrades  
+  template:
+    src: "{{ item }}.j2"
+    dest: "/etc/apt/apt.conf.d/{{ item }}"
+    owner: root
+    group: root
+    mode: 0644
+  with_items:
+    - 20auto-upgrades
+    - 50unattended-upgrades
+  become: true
+  become_user: root
+  notify: reboot server 
+
+- name: set hostnames for nodes
+  ansible.builtin.hostname:
+    name: "{{ inventory_hostname }}"
+  become: true
+  become_user: root
+  notify: reboot server 

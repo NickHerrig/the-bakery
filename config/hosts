@@ -1,40 +1,66 @@
 all:
   hosts:
     lighthouse.nebula.nickherrig.com:
-      ansible_host: 143.244.150.153 
+      ansible_host: 198.199.74.233
       ansible_user: root
-    appserver1.nebula.nickherrig.com:
+    keylime.nebula.nickherrig.com:
       ansible_host: 192.168.0.110
-    appserver2.nebula.nickherrig.com:
+    apple.nebula.nickherrig.com:
       ansible_host: 192.168.0.111
-    appserver3.nebula.nickherrig.com:
+    cherry.nebula.nickherrig.com:
       ansible_host: 192.168.0.112
+    banana.nebula.nickherrig.com:
+      ansible_host: 192.168.0.113
 
   children:
     nebula:
       hosts:
         lighthouse.nebula.nickherrig.com:
           nebula_is_lighthouse: true
-          nebula_hostname: lighthouse
           nebula_ip: 10.100.14.1
-          nebula_groups: "lightouse,vm"
-          nebula_outbound_firewall_rules: |
-            - port: any
-              proto: any
-              host: any
-          nebula_inbound_firewall_rules: |
-            - port: any
-              proto: any 
-              host: any
-        appserver1.nebula.nickherrig.com:
-          nebula_hostname: webserver 
+          nebula_groups: "lighthouse,do,vm"
+          nebula_arch: linux-amd64
+        keylime.nebula.nickherrig.com:
           nebula_ip: 10.100.14.2
-          nebula_groups: "webserver,vm"
+          nebula_groups: "pi"
           nebula_outbound_firewall_rules: |
             - port: any
               proto: any
               host: any
           nebula_inbound_firewall_rules: |
             - port: any
-              proto: any 
+              proto: icmp 
+              host: any
+        apple.nebula.nickherrig.com:
+          nebula_ip: 10.100.14.3
+          nebula_groups: "pi"
+          nebula_outbound_firewall_rules: |
+            - port: any
+              proto: any
+              host: any
+          nebula_inbound_firewall_rules: |
+            - port: any
+              proto: icmp 
+              host: any
+        cherry.nebula.nickherrig.com:
+          nebula_ip: 10.100.14.4
+          nebula_groups: "pi"
+          nebula_outbound_firewall_rules: |
+            - port: any
+              proto: any
+              host: any
+          nebula_inbound_firewall_rules: |
+            - port: any
+              proto: icmp 
+              host: any
+        banana.nebula.nickherrig.com:
+          nebula_ip: 10.100.14.5
+          nebula_groups: "pi"
+          nebula_outbound_firewall_rules: |
+            - port: any
+              proto: any
+              host: any
+          nebula_inbound_firewall_rules: |
+            - port: any
+              proto: icmp 
               host: any

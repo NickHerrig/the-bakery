@@ -1,6 +1,7 @@
 ---
 
-- name: provision and configure bare hosts
+- name: provision and configure hosts
   hosts: all
   roles:
-    - ubuntu
+    #- ubuntu
+    - nebula 

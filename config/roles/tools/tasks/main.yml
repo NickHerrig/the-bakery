@@ -1,9 +1,0 @@
----
-
-- name: Install my favorite tools vim and tree
-  apt:
-    pkg:
-      - vim
-      - tree
-    state: present
-  become: true

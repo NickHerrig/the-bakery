@@ -1,0 +1,7 @@
+---
+- name: restart nebula
+  systemd:
+    daemon_reload: true
+    name: nebula
+    state: restarted
+  become: true
