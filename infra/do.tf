@@ -13,3 +13,7 @@ resource "digitalocean_droplet" "nebula-lighthouse" {
     digitalocean_ssh_key.nick.fingerprint,
   ]
 }
+
+output "nebula-lighthouse" {
+  value = digitalocean_droplet.nebula-lighthouse.ipv4_address
+}
