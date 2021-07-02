@@ -1,10 +1,4 @@
 ---
-- name: restart crond
-  systemd:
-    name: crond 
-    state: restarted
-  become: true
-  become_user: root
 
 - name: restart sshd
   systemd:

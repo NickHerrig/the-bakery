@@ -4,6 +4,7 @@ nebula_config_dir: /etc/nebula
 nebula_version: 1.4.0
 nebula_arch: linux-arm-7
 nebula_install_dir: /usr/local/bin
+nebula_prometheus_port: 8080
 
 # Certificate authority and configuration related variables
 nebula_ca: localhost
@@ -14,6 +15,7 @@ nebula_device_config_dir: ~
 # Nebula network default variables
 nebula_cidr: "/24"
 nebula_lighthouse_port: 4242
+nebula_prometheus_port: 8080
 nebula_lighthouse_private_ip: ~
 nebula_lighthouse_public_ip: ~
 nebula_dns: false

@@ -1,7 +1,7 @@
 all:
   hosts:
     lighthouse.nebula.nickherrig.com:
-      ansible_host: 198.199.74.233
+      ansible_host: 157.245.141.67
       ansible_user: root
     keylime.nebula.nickherrig.com:
       ansible_host: 192.168.0.110
@@ -29,8 +29,8 @@ all:
               host: any
           nebula_inbound_firewall_rules: |
             - port: any
-              proto: icmp 
-              host: any
+              proto: any  
+              groups: admin 
         apple.nebula.nickherrig.com:
           nebula_ip: 10.100.14.3
           nebula_groups: "pi"
@@ -40,8 +40,8 @@ all:
               host: any
           nebula_inbound_firewall_rules: |
             - port: any
-              proto: icmp 
-              host: any
+              proto: any 
+              groups: admin 
         cherry.nebula.nickherrig.com:
           nebula_ip: 10.100.14.4
           nebula_groups: "pi"
@@ -51,8 +51,8 @@ all:
               host: any
           nebula_inbound_firewall_rules: |
             - port: any
-              proto: icmp 
-              host: any
+              proto: any 
+              groups: admin 
         banana.nebula.nickherrig.com:
           nebula_ip: 10.100.14.5
           nebula_groups: "pi"
@@ -62,5 +62,5 @@ all:
               host: any
           nebula_inbound_firewall_rules: |
             - port: any
-              proto: icmp 
-              host: any
+              proto: any 
+              groups: admin 

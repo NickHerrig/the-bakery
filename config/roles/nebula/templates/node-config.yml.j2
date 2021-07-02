@@ -15,7 +15,7 @@ lighthouse:
 
   serve_dns: true
   dns:
-    host: 0.0.0.0
+    host: {{ nebula_lighthouse_public_ip }}
     port: 53
 
   {% endif %}
@@ -58,6 +58,15 @@ tun:
 logging:
   level: info
   format: text
+
+stats:
+
+  type: prometheus
+  listen: {{ nebula_ip }}:{{ nebula_prometheus_port }}
+  path: /metrics
+  namespace: prometheusns
+  subsystem: nebula
+  interval: 15s
 
 firewall:
   conntrack:

@@ -5,7 +5,6 @@
     name: Etc/UTC
   become: true
   become_user: root
-  notify: restart crond
 
 - name: install common packages 
   apt:

@@ -44,3 +44,29 @@
     enabled: true
   become_user: root
   become: true
+
+- name: open nebula dns port on ufw for lighthouse 
+  ufw:
+    rule: allow
+    port: "53"
+  become: true
+  become_user: root
+  when: nebula_is_lighthouse
+
+- name: open nebula dns port on ufw for lighthouse 
+  ufw:
+    rule: allow
+    port: "{{ nebula_lighthouse_port }}"
+  become: true
+  become_user: root
+  when: nebula_is_lighthouse
+
+- name: Set UFW allow all traffic on nebual1 interface
+  ufw:
+    rule: allow
+    direction: in
+    interface: nebula1
+  become: true
+  become_user: root
+
+#TODO Configure DNS server for all hosts
