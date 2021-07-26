@@ -3,14 +3,11 @@ all:
     lighthouse.nebula.nickherrig.com:
       ansible_host: 157.245.141.67
       ansible_user: root
-    keylime.nebula.nickherrig.com:
-      ansible_host: 192.168.0.110
-    apple.nebula.nickherrig.com:
-      ansible_host: 192.168.0.111
-    cherry.nebula.nickherrig.com:
-      ansible_host: 192.168.0.112
+    testing.nebula.nickherrig.com:
+      ansible_host: 134.209.211.189 
+      ansible_user: root
     banana.nebula.nickherrig.com:
-      ansible_host: 192.168.0.113
+      ansible_host: 192.168.0.100
 
   children:
     nebula:
@@ -20,31 +17,10 @@ all:
           nebula_ip: 10.100.14.1
           nebula_groups: "lighthouse,do,vm"
           nebula_arch: linux-amd64
-        keylime.nebula.nickherrig.com:
+        testing.nebula.nickherrig.com:
           nebula_ip: 10.100.14.2
-          nebula_groups: "pi"
-          nebula_outbound_firewall_rules: |
-            - port: any
-              proto: any
-              host: any
-          nebula_inbound_firewall_rules: |
-            - port: any
-              proto: any  
-              groups: admin 
-        apple.nebula.nickherrig.com:
-          nebula_ip: 10.100.14.3
-          nebula_groups: "pi"
-          nebula_outbound_firewall_rules: |
-            - port: any
-              proto: any
-              host: any
-          nebula_inbound_firewall_rules: |
-            - port: any
-              proto: any 
-              groups: admin 
-        cherry.nebula.nickherrig.com:
-          nebula_ip: 10.100.14.4
-          nebula_groups: "pi"
+          nebula_groups: "influxdb,do,vm"
+          nebula_arch: linux-amd64
           nebula_outbound_firewall_rules: |
             - port: any
               proto: any
@@ -56,6 +32,7 @@ all:
         banana.nebula.nickherrig.com:
           nebula_ip: 10.100.14.5
           nebula_groups: "pi"
+          nebula_arch: linux-arm64
           nebula_outbound_firewall_rules: |
             - port: any
               proto: any
@@ -64,3 +41,6 @@ all:
             - port: any
               proto: any 
               groups: admin 
+            - port: any
+              proto: any 
+              groups: influxdb 
