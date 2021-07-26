@@ -69,4 +69,31 @@
   become: true
   become_user: root
 
-#TODO Configure DNS server for all hosts
+- name: Install dns system dependencies
+  apt:
+    name: resolvconf
+    state: present
+    update_cache: true
+  retries: 5
+  delay: 2
+  become_user: root
+  become: true
+
+- name: copy dns config
+  template:
+    src: "dns_conf.j2"
+    dest: "/etc/resolvconf/resolv.conf.d/head"
+    mode: "0644"
+  become: true
+  become_user: root
+  notify:
+    - restart resolvconf
+
+- name: ensure resolvconf service is started and enabled
+  systemd:
+    daemon_reload: true
+    name: resolvconf
+    state: started
+    enabled: true
+  become_user: root
+  become: true

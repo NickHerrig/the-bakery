@@ -4,7 +4,6 @@ nebula_config_dir: /etc/nebula
 nebula_version: 1.4.0
 nebula_arch: linux-arm-7
 nebula_install_dir: /usr/local/bin
-nebula_prometheus_port: 8080
 
 # Certificate authority and configuration related variables
 nebula_ca: localhost

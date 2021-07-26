@@ -1,9 +1,9 @@
 {{ ansible_managed  | comment }}
 
 pki:
-  ca: {{ nebula_ca_dir }}/ca.crt
-  cert: {{ nebula_ca_dir }}/{{ item.nebula_hostname }}.crt
-  key: {{ nebula_ca_dir }}/{{ item.nebula_hostname }}.key
+  ca: /Users/nick/Desktop/nebula/certs/ca.crt
+  cert: /Users/nick/Desktop/nebula/certs/{{ item.nebula_hostname }}.crt
+  key: /Users/nick/Desktop/nebula/certs/{{ item.nebula_hostname }}.key
 
 static_host_map:
   "{{ nebula_lighthouse_private_ip }}": ["{{ nebula_lighthouse_public_ip }}:{{ nebula_lighthouse_port }}"]
