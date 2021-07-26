@@ -5,3 +5,10 @@
     name: nebula
     state: restarted
   become: true
+
+- name: restart resolvconf
+  become: true
+  systemd:
+    daemon_reload: true
+    name: resolvconf
+    state: restarted
