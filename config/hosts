@@ -3,9 +3,6 @@ all:
     lighthouse.nebula.nickherrig.com:
       ansible_host: 157.245.141.67
       ansible_user: root
-    testing.nebula.nickherrig.com:
-      ansible_host: 134.209.211.189 
-      ansible_user: root
     banana.nebula.nickherrig.com:
       ansible_host: 192.168.0.100
 
@@ -15,32 +12,17 @@ all:
         lighthouse.nebula.nickherrig.com:
           nebula_is_lighthouse: true
           nebula_ip: 10.100.14.1
-          nebula_groups: "lighthouse,do,vm"
-          nebula_arch: linux-amd64
-        testing.nebula.nickherrig.com:
-          nebula_ip: 10.100.14.2
-          nebula_groups: "influxdb,do,vm"
+          nebula_groups: "lighthouse,web,do,vm"
           nebula_arch: linux-amd64
           nebula_outbound_firewall_rules: |
-            - port: any
-              proto: any
-              host: any
-          nebula_inbound_firewall_rules: |
-            - port: any
-              proto: any 
-              groups: admin 
+            - port: any 
+              proto: tcp 
+              groups: haircut 
         banana.nebula.nickherrig.com:
           nebula_ip: 10.100.14.5
-          nebula_groups: "pi"
+          nebula_groups: "pi,haircut"
           nebula_arch: linux-arm64
-          nebula_outbound_firewall_rules: |
-            - port: any
-              proto: any
-              host: any
           nebula_inbound_firewall_rules: |
-            - port: any
-              proto: any 
-              groups: admin 
-            - port: any
-              proto: any 
-              groups: influxdb 
+            - port: any 
+              proto: tcp 
+              groups: web 
