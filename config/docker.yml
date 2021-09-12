@@ -1,0 +1,6 @@
+---
+
+- name: install docker on ubuntu raspberry pi four b 
+  hosts: banana
+  roles:
+    - docker 
