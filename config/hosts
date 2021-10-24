@@ -1,28 +1,13 @@
 all:
   hosts:
-    lighthouse.nebula.nickherrig.com:
-      ansible_host: 157.245.141.67
+    curtaincall.tech:
+      ansible_host: 157.230.190.97
       ansible_user: root
-    banana.nebula.nickherrig.com:
-      ansible_host: 192.168.0.100
 
   children:
-    nebula:
+    curtaincall:
       hosts:
-        lighthouse.nebula.nickherrig.com:
-          nebula_is_lighthouse: true
-          nebula_ip: 10.100.14.1
-          nebula_groups: "lighthouse,web,do,vm"
-          nebula_arch: linux-amd64
-          nebula_outbound_firewall_rules: |
-            - port: any 
-              proto: tcp 
-              groups: haircut 
-        banana.nebula.nickherrig.com:
-          nebula_ip: 10.100.14.5
-          nebula_groups: "pi,haircut"
-          nebula_arch: linux-arm64
-          nebula_inbound_firewall_rules: |
-            - port: any 
-              proto: tcp 
-              groups: web 
+        curtaincall.tech:
+    curtaincall_web:
+      hosts:
+        curtaincall.tech:

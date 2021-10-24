@@ -1,0 +1,11 @@
+---
+
+- name: curtaincall servers 
+  hosts: curtaincall 
+  roles:
+    - ubuntu
+
+- name: curtaincall web servers 
+  hosts: curtaincall_web
+  roles:
+    - caddy

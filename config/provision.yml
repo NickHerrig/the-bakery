@@ -1,7 +1,7 @@
 ---
 
 - name: provision and configure hosts
-  hosts: all
+  hosts: banana
   roles:
     - ubuntu
-    - nebula 
+    - docker

@@ -1,0 +1,7 @@
+{{ ansible_managed | comment }}
+
+{% for config in caddy_config  %}
+{{ config.hostname }}
+reverse_proxy {{ config.proxy_ip }}:{{ config.proxy_port }}
+{% endfor %}
+
